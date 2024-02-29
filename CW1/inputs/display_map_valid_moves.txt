@@ -1,0 +1,4 @@
+mazes/valid/valid4.txt
+D
+D
+M

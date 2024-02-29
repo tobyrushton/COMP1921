@@ -35,8 +35,7 @@ echo -e "~~ Testing invalid moves ~~"
 
 # go into wall
 echo -e "\n~~ Testing mazes/valid/valid1.txt with invalid moves ~~"
-echo -e "mazes/valid/valid1.txt\nA" > test
-echo -e test | ./maze > tmp;
+cat move_left_invalid.txt | ./maze > tmp;
 
 if grep -q "Error: Invalid move. Please try again" tmp; then
     echo "PASS"
@@ -46,8 +45,7 @@ fi
 
 # fall of the edge
 echo -e "\n~~ Testing mazes/valid/valid7.txt with invalid moves ~~"
-echo -e "mazes/valid/valid7.txt\nD\nD\nD\nD" > test
-cat test | ./maze > tmp;
+cat move_right_invalid.txt | ./maze > tmp;
 
 if grep -q "Error: Invalid move. Please try again" tmp; then
     echo "PASS"
@@ -57,8 +55,7 @@ fi
 
 # go into wall
 echo -e "\n~~ Testing mazes/valid/valid4.txt with invalid moves and display map ~~"
-echo -e "mazes/valid/valid4.txt\nA\nM" > test
-cat test | ./maze > tmp;
+cat invalid_move_map.txt | ./maze > tmp;
 if grep -q "Error: Invalid move. Please try again" tmp; then
     if grep -q "#####" tmp; then
         if grep -q "#X  #" tmp; then
@@ -87,8 +84,7 @@ fi
 
 # invalid character
 echo -e "\n~~ Testing mazes/valid/valid4.txt with invalid character ~~"
-echo -e "mazes/valid/valid4.txt\nZ" > test
-cat test | ./maze > tmp;
+cat invalid_character.txt | ./maze > tmp;
 
 if grep -q "Error: Invalid move. Please try again" tmp; then
     echo "PASS"
@@ -100,8 +96,7 @@ fi
 echo -e "~~ Testing valid moves ~~"
 
 echo -e "\n~~ Testing mazes/valid/valid4.txt with display map ~~"
-echo -e "mazes/valid/valid4.txt\nM" > test
-cat test | ./maze > tmp;
+cat display_map.txt | ./maze > tmp;
 
 if grep -q "#####" tmp; then
     if grep -q "#X  #" tmp; then
@@ -126,8 +121,7 @@ else
 fi
 
 echo -e "\n~~ Testing mazes/valid/valid4.txt with valid moves and display map ~~"
-echo -e "mazes/valid/valid4.txt\nD\nD\nM" > test
-cat test | ./maze > tmp;
+cat display_map_valid_moves.txt | ./maze > tmp;
 
 if grep -q "#####" tmp; then
     if grep -q "#S X#" tmp; then
@@ -152,8 +146,8 @@ else
 fi
 
 echo -e "\n~~ Testing mazes/valid/valid4.txt with valid move ~~"
-echo -e "mazes/valid/valid4.txt\nD" > test
-cat test | ./maze > tmp;
+cat valid_move.txt | ./maze > tmp;
+
 if grep -q "Error: Invalid move. Please try again" tmp; then
     echo "FAIL"
 else
@@ -161,9 +155,9 @@ else
 fi
 
 echo -e "\n~~ Testing mazes/valid/valid4.txt with valid solution ~~"
-echo -e "mazes/valid/valid4.txt\nD\nD\nS\n\S\nA\nA" > test
-cat test | ./maze > tmp;
-if grep -q "Congratulations you have solved the maze" tmp; then
+cat valid_solution.txt | ./maze > tmp;
+
+if grep -q "Congratulations you have solved the maze!" tmp; then
     echo "PASS"
 else
     echo "FAIL"

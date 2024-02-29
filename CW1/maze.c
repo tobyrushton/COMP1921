@@ -10,6 +10,10 @@ int main() {
 
     checkMazeValid(fileName);
 
+    // Create the maze struct
+    struct Maze maze;
+    populateMaze(fileName, &maze);
+
     // just so it doesn't loop forever while skeleton is still being built
     int whileSkeleton = 0;
     // Keep asking for input until the game is over
@@ -17,6 +21,8 @@ int main() {
         handleInput();
         whileSkeleton++;
     }
+
+    printf("Congratulations you have solved the maze!\n");
 
     return 0;   
 }
