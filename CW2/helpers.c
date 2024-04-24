@@ -5,7 +5,11 @@
 #include <ctype.h>
 #include "helpers.h"
 
-// Function to handle the input
+/**
+ * @brief Handles user input and calls the appropriate function based on the input.
+ *
+ * @param maze A pointer to the Maze structure.
+ */
 void handleInput(Maze *maze){
     printf("Enter an input: \n");
     char input[100];
@@ -33,12 +37,18 @@ void handleInput(Maze *maze){
     } else {
         printf("Error: Invalid move. Please try again\n");
     }
-};
+}
 
-// checks if the user has reached the end of the maze
+
+/**
+ * @brief Checks if the game is over by determining if the player has reached the exit.
+ * 
+ * @param maze The maze structure representing the game state.
+ * @return 1 if the game is over (player reached the exit), 0 otherwise.
+ */
 int checkGameOver(Maze maze){
     return maze.map[maze.playerY][maze.playerX] == 'E';
-};
+}
 
 // prints the map to the console
 void displayMap(Maze maze){
@@ -56,10 +66,16 @@ void displayMap(Maze maze){
     printf("\n");
 }
 
-// handles the movement of the user
+/**
+ * @brief Handles the movement of the player in the maze.
+ * 
+ * @param maze The maze structure.
+ * @param newX The new X-coordinate of the player.
+ * @param newY The new Y-coordinate of the player.
+ */
 void handleMove(Maze *maze, int newX, int newY){
-    // check if the new position is a wall
-    if(maze->map[newY][newX] == '#'){
+    // check if the new position is a wall or off the map
+    if(maze->map[newY][newX] == '#' || newX < 0 || newY < 0 || newX >= maze->width || newY >= maze->height){
         printf("Error: Invalid move. Please try again\n");
         return;
     }
@@ -67,13 +83,12 @@ void handleMove(Maze *maze, int newX, int newY){
     // update the player position
     maze->playerX = newX;
     maze->playerY = newY;
-};
-
-/*
- * @brief checks if the maze is valid
- * @param fileName the name of the file containing the maze
- * exits the program if not valid
-*/
+}
+/**
+ * @brief Checks if the given maze is valid.
+ * 
+ * @param maze The maze to be checked.
+ */
 void checkMazeValid(Maze maze){
     if( // validates correct dimensions
         maze.width < 5 || 
@@ -124,33 +139,39 @@ void checkMazeValid(Maze maze){
         printf("Error: Invalid maze\n");
         exit(3);
     }
-};
+}
 
-/*
-* @brief populates the maze struct with the maze from the file
-* @param fileName the name of the file containing the maze
-* @param maze the maze struct to populate
-*/
+/**
+ * @brief Populates the maze structure with data from a file.
+ *
+ * @param fileName The name of the file to read the maze data from.
+ * @param maze A pointer to the Maze structure to populate.
+ */
 void populateMaze(char *fileName, Maze *maze){
+    // open file and exit if it doesn't exist
     FILE *file = fopen(fileName, "r");
     if (file == NULL){
         printf("Error: File not found\n");
         exit(2);
     }
 
+    // set buffer length
     int bufferLength = 255;
     char buffer[bufferLength];
 
     int width = 0; // takes the largest width
     int height = 0;
 
+    // to determine starting position
     int playerX = 0;
     int playerY = 0;
 
     // max size of the map
     char **map = malloc(sizeof(char *) * bufferLength);
 
+    // get each line in the file and put contents in buffer
     while(fgets(buffer, bufferLength, file)) {
+        // allocate memory to the column of map
         map[height] = malloc(sizeof(char) * bufferLength);
         int lineWidth = strlen(buffer);
         // 1 to ignore new line character
@@ -166,6 +187,7 @@ void populateMaze(char *fileName, Maze *maze){
             playerY = height;
         }
 
+        // copy the buffer to map
         strcpy(map[height++], buffer);
     }
 
