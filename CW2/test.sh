@@ -8,7 +8,7 @@ echo -e "~~ Testing invalid mazes ~~"
 for i in {1..6}
 do
     echo -e "\n~~ Testing mazes/invalid/invalid$i.txt ~~"
-    echo "mazes/invalid/invalid$i.txt" | ./maze > tmp
+    echo ./maze "mazes/invalid/invalid$i.txt" > tmp;
 
     if grep -q "Error: Invalid maze" tmp; then
         echo "PASS"
@@ -22,7 +22,7 @@ echo -e "\n~~ Testing valid mazes ~~"
 for i in {1..7}
 do
     echo -e "\n~~ Testing mazes/valid/valid$i.txt ~~"
-    echo "mazes/valid/valid$i.txt" | ./maze > tmp;
+    echo ./maze "mazes/valid/valid$i.txt" > tmp;
 
     if grep -q "Error: Invalid maze" tmp; then
         echo "FAIL"
@@ -35,7 +35,7 @@ echo -e "~~ Testing invalid moves ~~"
 
 # go into wall
 echo -e "\n~~ Testing mazes/valid/valid1.txt with invalid moves ~~"
-cat inputs/move_left_invalid.txt | ./maze > tmp;
+cat inputs/move_left_invalid.txt | ./maze "mazes/valid/valid1.txt" > tmp;
 
 if grep -q "Error: Invalid move. Please try again" tmp; then
     echo "PASS"
@@ -45,7 +45,7 @@ fi
 
 # fall of the edge
 echo -e "\n~~ Testing mazes/valid/valid7.txt with invalid moves ~~"
-cat inputs/move_right_invalid.txt | ./maze > tmp;
+cat inputs/move_right_invalid.txt | ./maze "mazes/valid/valid7.txt" > tmp;
 
 if grep -q "Error: Invalid move. Please try again" tmp; then
     echo "PASS"
@@ -55,7 +55,7 @@ fi
 
 # go into wall
 echo -e "\n~~ Testing mazes/valid/valid4.txt with invalid moves and display map ~~"
-cat inputs/invalid_move_map.txt | ./maze > tmp;
+cat inputs/invalid_move_map.txt | ./maze "mazes/valid/valid4.txt" > tmp;
 if grep -q "Error: Invalid move. Please try again" tmp; then
     if grep -q "#####" tmp; then
         if grep -q "#X  #" tmp; then
@@ -84,7 +84,7 @@ fi
 
 # invalid character
 echo -e "\n~~ Testing mazes/valid/valid4.txt with invalid character ~~"
-cat inputs/invalid_character.txt | ./maze > tmp;
+cat inputs/invalid_character.txt | ./maze "mazes/valid/valid4.txt" > tmp;
 
 if grep -q "Error: Invalid move. Please try again" tmp; then
     echo "PASS"
@@ -96,7 +96,7 @@ fi
 echo -e "~~ Testing valid moves ~~"
 
 echo -e "\n~~ Testing mazes/valid/valid4.txt with display map ~~"
-cat inputs/display_map.txt | ./maze > tmp;
+cat inputs/display_map.txt | ./maze "mazes/valid/valid4.txt" > tmp;
 
 if grep -q "#####" tmp; then
     if grep -q "#X  #" tmp; then
@@ -121,7 +121,7 @@ else
 fi
 
 echo -e "\n~~ Testing mazes/valid/valid4.txt with valid moves and display map ~~"
-cat inputs/display_map_valid_moves.txt | ./maze > tmp;
+cat inputs/display_map_valid_moves.txt | ./maze "mazes/valid/valid4.txt" > tmp;
 
 if grep -q "#####" tmp; then
     if grep -q "#S X#" tmp; then
@@ -146,7 +146,7 @@ else
 fi
 
 echo -e "\n~~ Testing mazes/valid/valid4.txt with valid move ~~"
-cat inputs/valid_move.txt | ./maze > tmp;
+cat inputs/valid_move.txt | ./maze "mazes/valid/valid4.txt" > tmp;
 
 if grep -q "Error: Invalid move. Please try again" tmp; then
     echo "FAIL"
@@ -155,7 +155,7 @@ else
 fi
 
 echo -e "\n~~ Testing mazes/valid/valid4.txt with valid solution ~~"
-cat inputs/valid_solution.txt | ./maze > tmp;
+cat inputs/valid_solution.txt | ./maze "mazes/valid/valid4.txt" > tmp;
 
 if grep -q "Congratulations you have solved the maze!" tmp; then
     echo "PASS"

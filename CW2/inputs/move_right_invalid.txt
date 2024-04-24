@@ -1,4 +1,3 @@
-mazes/valid/valid7.txt
 D
 D
 D

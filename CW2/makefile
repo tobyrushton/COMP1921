@@ -10,3 +10,7 @@ maze: $(OBJS)
 
 clean:
 	rm -f maze $(OBJS)
+
+test:
+	make maze
+	./test.sh

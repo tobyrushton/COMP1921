@@ -1,2 +1,1 @@
-mazes/valid/valid1.txt
 D

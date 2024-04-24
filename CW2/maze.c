@@ -1,18 +1,13 @@
 #include <stdio.h>
 #include "helpers.h"
 
-int main() {
-    // Get the file name from the user
-    char fileName[100];
-    printf("Enter the file name: \n");
-    scanf("%s", fileName);
-    printf("The file name is: %s\n", fileName);
+int main(int argc, char *argv[]) {
+    printf("%s\n", argv[1]);
+    checkMazeValid(argv[1]);
 
-    checkMazeValid(fileName);
-
-    // Create the maze struct
+    // Create the maze struct and populate
     struct Maze maze;
-    populateMaze(fileName, &maze);
+    populateMaze(argv[1], &maze);
 
     // just so it doesn't loop forever while skeleton is still being built
     int whileSkeleton = 0;
