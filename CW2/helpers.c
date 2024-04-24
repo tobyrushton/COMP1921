@@ -10,7 +10,7 @@ void handleInput(Maze *maze){
     printf("Enter an input: \n");
     char input[100];
     scanf("%s", input);
-    printf("The input is: %s\n", input);
+    
     // remove the new line character
     input[strcspn(input, "\n")] = 0;
 
@@ -42,6 +42,7 @@ int checkGameOver(Maze maze){
 
 // prints the map to the console
 void displayMap(Maze maze){
+    printf("\n");
     for(int i = 0; i < maze.height; i++) {
         for (int j = 0; j < maze.width; j++) {
             if(maze.playerX == j && maze.playerY == i){
@@ -52,7 +53,8 @@ void displayMap(Maze maze){
         }
         printf("\n");
     }
-};
+    printf("\n");
+}
 
 // handles the movement of the user
 void handleMove(Maze *maze, int newX, int newY){
@@ -90,14 +92,27 @@ void checkMazeValid(Maze maze){
     // make sure all rows are equal length
     unsigned long rowLength = strlen(maze.map[0]);
     bool rowLengthsEqual = true;
+    bool invalidChar = false;
 
     for(int i = 0; i < maze.height; i++){
         // search for start and end
-        int sIndex = searchStringForChar(maze.map[i], 'S');
-        if(sIndex > -1) sCount++;
-        int eIndex = searchStringForChar(maze.map[i], 'E');
-        if(eIndex > -1) eCount++;
-
+        for (int j = 0; j < maze.width; j++){
+            // checks that the character is valid
+            switch(maze.map[i][j]){
+                case 'S':
+                    sCount++;
+                    break;
+                case 'E':
+                    eCount++;
+                    break;
+                case '#':
+                case ' ':
+                    break;
+                default:
+                    invalidChar = true;
+                    break;
+            }
+        }
         // check if all rows are equal length
         if(strlen(maze.map[i]) != rowLength){
             rowLengthsEqual = false;
@@ -105,7 +120,7 @@ void checkMazeValid(Maze maze){
     }
 
     // if there is not exactly one start and one end or the rows are not equal length
-    if(sCount != 1 || eCount != 1 || !rowLengthsEqual){
+    if(sCount != 1 || eCount != 1 || !rowLengthsEqual || invalidChar){
         printf("Error: Invalid maze\n");
         exit(3);
     }
@@ -133,9 +148,10 @@ void populateMaze(char *fileName, Maze *maze){
     int playerY = 0;
 
     // max size of the map
-    char map[bufferLength][bufferLength];
+    char **map = malloc(sizeof(char *) * bufferLength);
 
     while(fgets(buffer, bufferLength, file)) {
+        map[height] = malloc(sizeof(char) * bufferLength);
         int lineWidth = strlen(buffer);
         // 1 to ignore new line character
         if (lineWidth - 1 > width) width = lineWidth - 1;
@@ -160,6 +176,9 @@ void populateMaze(char *fileName, Maze *maze){
         (*maze).map[i] = malloc(sizeof(char) * width);
         strcpy((*maze).map[i], map[i]);
     }
+
+    // free memory after use
+    free(map);
 
     // assign width and height to the maze struct
     (*maze).width = width;
