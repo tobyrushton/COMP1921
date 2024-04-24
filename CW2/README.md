@@ -1,13 +1,13 @@
-# Coursework 1
+# Coursework 2
 
 ## How to execute
 First run
 ```bash
-chmod +x test.sh
+make maze
 ```  
-In order to make sure that the shell script is executable.  
-Then run
+In order to build the game <br>
+Then to play the game, run:
 
 ```bash
-./test.sh
+./maze <maze_input_file_path>
 ```
