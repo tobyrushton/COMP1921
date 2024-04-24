@@ -10,15 +10,15 @@ struct maze {
 };
 typedef struct maze Maze;
 
-void handleInput();
+void handleInput(Maze *maze);
 
-int checkGameOver();
+int checkGameOver(Maze maze);
 
 void checkMazeValid(Maze maze);
 
-void displayMap();
+void displayMap(Maze maze);
 
-void handleMove();
+void handleMove(Maze *maze, int newX, int newY);
 
 void populateMaze(char *fileName, Maze *maze);
 

@@ -2,26 +2,70 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 #include "helpers.h"
 
 // Function to handle the input
-void handleInput(){
+void handleInput(Maze *maze){
     printf("Enter an input: \n");
     char input[100];
     scanf("%s", input);
     printf("The input is: %s\n", input);
+    // remove the new line character
+    input[strcspn(input, "\n")] = 0;
+
+    // lowercase first char
+    input[0] = tolower(input[0]);
+
+    // call the appropriate function based on the input
+    if(strcmp(input, "w") == 0){
+        // upwards need to increment the y value as flat array
+        handleMove(maze, maze->playerX, maze->playerY - 1);
+    } else if(strcmp(input, "a") == 0){
+        handleMove(maze, maze->playerX - 1, maze->playerY);
+    } else if(strcmp(input, "s") == 0){
+        // downwards need to increment the y value as flat array
+        handleMove(maze, maze->playerX, maze->playerY + 1);
+    } else if(strcmp(input, "d") == 0){
+        handleMove(maze, maze->playerX + 1, maze->playerY);
+    } else if(strcmp(input, "m") == 0){
+        displayMap((*maze));
+    } else {
+        printf("Error: Invalid move. Please try again\n");
+    }
 };
 
 // checks if the user has reached the end of the maze
-int checkGameOver(){
-    return 1;
+int checkGameOver(Maze maze){
+    return maze.map[maze.playerY][maze.playerX] == 'E';
 };
 
 // prints the map to the console
-void displayMap(){};
+void displayMap(Maze maze){
+    for(int i = 0; i < maze.height; i++) {
+        for (int j = 0; j < maze.width; j++) {
+            if(maze.playerX == j && maze.playerY == i){
+                printf("X");
+            } else {
+                printf("%c", maze.map[i][j]);
+            }
+        }
+        printf("\n");
+    }
+};
 
 // handles the movement of the user
-void handleMove(){};
+void handleMove(Maze *maze, int newX, int newY){
+    // check if the new position is a wall
+    if(maze->map[newY][newX] == '#'){
+        printf("Error: Invalid move. Please try again\n");
+        return;
+    }
+
+    // update the player position
+    maze->playerX = newX;
+    maze->playerY = newY;
+};
 
 /*
  * @brief checks if the maze is valid
@@ -75,7 +119,7 @@ void checkMazeValid(Maze maze){
 void populateMaze(char *fileName, Maze *maze){
     FILE *file = fopen(fileName, "r");
     if (file == NULL){
-        printf("File not found\n");
+        printf("Error: File not found\n");
         exit(1);
     }
 
