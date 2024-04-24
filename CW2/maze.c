@@ -2,12 +2,12 @@
 #include "helpers.h"
 
 int main(int argc, char *argv[]) {
-    printf("%s\n", argv[1]);
-    checkMazeValid(argv[1]);
-
     // Create the maze struct and populate
-    struct Maze maze;
+    Maze maze;
     populateMaze(argv[1], &maze);
+
+    // Check if the maze is valid will exit if not
+    checkMazeValid(maze);
 
     // just so it doesn't loop forever while skeleton is still being built
     int whileSkeleton = 0;

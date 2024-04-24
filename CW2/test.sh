@@ -8,7 +8,7 @@ echo -e "~~ Testing invalid mazes ~~"
 for i in {1..6}
 do
     echo -e "\n~~ Testing mazes/invalid/invalid$i.txt ~~"
-    echo ./maze "mazes/invalid/invalid$i.txt" > tmp;
+    ./maze "mazes/invalid/invalid$i.txt" | tee tmp;
 
     if grep -q "Error: Invalid maze" tmp; then
         echo "PASS"
@@ -22,7 +22,7 @@ echo -e "\n~~ Testing valid mazes ~~"
 for i in {1..7}
 do
     echo -e "\n~~ Testing mazes/valid/valid$i.txt ~~"
-    echo ./maze "mazes/valid/valid$i.txt" > tmp;
+    ./maze "mazes/valid/valid$i.txt" | tee tmp;
 
     if grep -q "Error: Invalid maze" tmp; then
         echo "FAIL"
@@ -31,7 +31,7 @@ do
     fi
 done
 
-echo -e "~~ Testing invalid moves ~~"
+echo -e "\n~~ Testing invalid moves ~~"
 
 # go into wall
 echo -e "\n~~ Testing mazes/valid/valid1.txt with invalid moves ~~"
