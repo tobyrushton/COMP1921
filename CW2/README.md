@@ -11,3 +11,5 @@ Then to play the game, run:
 ```bash
 ./maze <maze_input_file_path>
 ```
+
+## Possible inputs
