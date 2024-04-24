@@ -80,7 +80,7 @@ void checkMazeValid(Maze maze){
         maze.width > 100
     ){
         printf("Error: Invalid maze\n");
-        exit(1);
+        exit(3);
     }
 
     // search for starts and ends
@@ -107,7 +107,7 @@ void checkMazeValid(Maze maze){
     // if there is not exactly one start and one end or the rows are not equal length
     if(sCount != 1 || eCount != 1 || !rowLengthsEqual){
         printf("Error: Invalid maze\n");
-        exit(1);
+        exit(3);
     }
 };
 
@@ -120,7 +120,7 @@ void populateMaze(char *fileName, Maze *maze){
     FILE *file = fopen(fileName, "r");
     if (file == NULL){
         printf("Error: File not found\n");
-        exit(1);
+        exit(2);
     }
 
     int bufferLength = 255;

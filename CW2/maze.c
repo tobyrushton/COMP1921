@@ -2,6 +2,12 @@
 #include "helpers.h"
 
 int main(int argc, char *argv[]) {
+    // validate that an arguement has been passed
+    if(argc != 2){
+        printf("Please provide a maze file as an arguement\n");
+        return 1;
+    }
+    
     // Create the maze struct and populate
     Maze maze;
     populateMaze(argv[1], &maze);
